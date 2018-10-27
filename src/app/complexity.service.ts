@@ -13,4 +13,8 @@ export class ComplexityService {
   getComplexityPerUserOverTime() {
     return this.http.get<any>(BASE_URL + 'commit');
   }
+
+  getComplexityByDay() {
+    return this.http.get<any>(BASE_URL + 'commit/timeOfDay');
+  }
 }

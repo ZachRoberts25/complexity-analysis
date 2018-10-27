@@ -17,15 +17,14 @@ export class AppComponent implements OnInit {
   title = 'ui';
   constructor(private complexityService: ComplexityService ) { }
 
-  complexityOverTimeData = {};
+  complexityOverTimeData = [];
+  complexityOverDayData = [];
+  complexityOverDayDataLoaded = false;
 
   ngOnInit() {
     this.complexityService.getComplexityPerUserOverTime().subscribe(d => {
-      console.log(d.aggregations.user.buckets);
       for (const bucket of (d.aggregations.user.buckets as any[])) {
-        console.log(bucket.key);
-        console.log(bucket);
-        this.complexityOverTimeData[bucket.key] = {};
+        // this.complexityOverTimeData[bucket.key] = {};
         for (const date of bucket.date.buckets as any[]) {
           // const complexityData = {
             // complexity: date.complexity.value,
@@ -33,11 +32,27 @@ export class AppComponent implements OnInit {
             // difficulty: date.difficulty.value,
             // effort: date.effort.value
           // };
-          this.complexityOverTimeData[bucket.key][date.key] = date.complexityDensity.value;
+          const data = {};
+          data[bucket.key] = date.complexityDensity.value;
+          this.complexityOverTimeData.push({
+            date: date.key,
+            data
+          });
         }
       }
 
       console.log(this.complexityOverTimeData);
+    });
+
+    this.complexityService.getComplexityByDay().subscribe(d => {
+      const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+      for (const day of d.aggregations.dayOfWeek.buckets) {
+        const infoOverDay = {key: day.key - 1, value: day.complexityDensity.value};
+        this.complexityOverDayData.push(infoOverDay);
+      }
+      this.complexityOverDayData.sort((a, b) => +a.key - +b.key);
+      this.complexityOverDayData.forEach(data => data.key = days[data.key]);
+      this.complexityOverDayDataLoaded = true;
     });
   }
 }

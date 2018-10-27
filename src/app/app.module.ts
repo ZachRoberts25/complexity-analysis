@@ -9,6 +9,7 @@ import { FileComplexityOverTimeComponent } from './file-complexity-over-time/fil
 import { ProjectComplexityByPeriodComponent } from './project-complexity-by-period/project-complexity-by-period.component';
 import { TopComplexityListComponent } from './top-complexity-list/top-complexity-list.component';
 import { StackedBarGraphComponent } from './stacked-bar-graph/stacked-bar-graph.component';
+import { PieChartComponent } from './pie-chart/pie-chart.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { StackedBarGraphComponent } from './stacked-bar-graph/stacked-bar-graph.
     FileComplexityOverTimeComponent,
     ProjectComplexityByPeriodComponent,
     TopComplexityListComponent,
-    StackedBarGraphComponent
+    StackedBarGraphComponent,
+    PieChartComponent
   ],
   imports: [
     BrowserModule,
