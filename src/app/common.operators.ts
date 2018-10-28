@@ -9,6 +9,11 @@ export interface StackedBarGraphData {
     data: {[key: string]: number};
 }
 
+export interface LineGraphData {
+    date: Date;
+    count: number;
+}
+
 export function uuid() {
     return '_' + Math.random().toString(36).substr(2, 9);
 }
@@ -57,5 +62,31 @@ export function getStackedBarGraphData(data: any, field: string) {
     for (const key of Array.from(dateMap.keys())) {
         ret.push({ date: moment(key).toDate(), data: dateMap.get(key) });
     }
+    return ret;
+}
+
+export function getLineGraphData(data: any) {
+    const ret: LineGraphData[] = [];
+    if (!data.aggregations.date) {
+        const dateMap = new Map<string, number>();
+        for (const a of data.aggregations[Object.keys(data.aggregations)[0]].buckets) {
+            for (const b of a.date.buckets) {
+                if (dateMap.has(b.key)) {
+                    let c = dateMap.get(b.key);
+                    c += b.complexity.value;
+                } else {
+                    dateMap.set(b.key, b.complexity.value);
+                }
+            }
+        }
+        for (const a of Array.from(dateMap.keys())) {
+            ret.push({ date: moment(a).toDate(), count: dateMap.get(a) });
+        }
+    } else {
+        for (const a of data.aggregations.date.buckets) {
+            ret.push({ date: moment(a.key).toDate(), count: a.complexity.value });
+        }
+    }
+    ret.sort((a, b) => moment(b.date).isAfter(a.date) ? -1 : 1);
     return ret;
 }

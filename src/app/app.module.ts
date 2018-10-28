@@ -10,6 +10,7 @@ import { ProjectComplexityByPeriodComponent } from './project-complexity-by-peri
 import { TopComplexityListComponent } from './top-complexity-list/top-complexity-list.component';
 import { StackedBarGraphComponent } from './stacked-bar-graph/stacked-bar-graph.component';
 import { PieChartComponent } from './pie-chart/pie-chart.component';
+import { LineGraphComponent } from './line-graph/line-graph.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { PieChartComponent } from './pie-chart/pie-chart.component';
     ProjectComplexityByPeriodComponent,
     TopComplexityListComponent,
     StackedBarGraphComponent,
-    PieChartComponent
+    PieChartComponent,
+    LineGraphComponent
   ],
   imports: [
     BrowserModule,

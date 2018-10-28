@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ComplexityService } from './complexity.service';
-import { getStackedBarGraphData } from './common.operators';
+import { getStackedBarGraphData, getLineGraphData } from './common.operators';
 
 
 
@@ -22,6 +22,7 @@ export class AppComponent implements OnInit {
   complexityOverTimeData = [];
   complexityOverDayData = [];
   complexityOverDayDataLoaded = false;
+  deltaComplexityOverTime = [];
 
   ngOnInit() {
     // complexity: date.complexity.value,
@@ -44,6 +45,11 @@ export class AppComponent implements OnInit {
       this.complexityOverDayDataLoaded = true;
     });
 
-    this.complexityService.getComplexCommits().subscribe(d => console.log(d));
+    this.complexityService.getComplexCommits().subscribe(d => console.log('help', d));
+    this.complexityService.getDeltaComplexityOverTime().subscribe(d => {
+      // console.log(getLineGraphData(d));
+      const temp = getLineGraphData(d);
+      this.deltaComplexityOverTime = temp.slice(temp.length - 60, temp.length - 30);
+    });
   }
 }
