@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
   complexityOverDayData = [];
   complexityOverDayDataLoaded = false;
   deltaComplexityOverTime = [];
-
+  complexCommits = [];
   ngOnInit() {
     // complexity: date.complexity.value,
     // complexityDensity: date.complexityDensity.value,
@@ -45,7 +45,7 @@ export class AppComponent implements OnInit {
       this.complexityOverDayDataLoaded = true;
     });
 
-    this.complexityService.getComplexCommits().subscribe(d => console.log('help', d));
+    // this.complexityService.getComplexCommits().subscribe(d => this.complexCommits = d);
     this.complexityService.getDeltaComplexityOverTime().subscribe(d => {
       // console.log(getLineGraphData(d));
       const temp = getLineGraphData(d);

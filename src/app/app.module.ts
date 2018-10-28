@@ -14,6 +14,7 @@ import { LineGraphComponent } from './line-graph/line-graph.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserTableComponent } from './user-table/user-table.component';
 import { MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material';
+import { ComplexityService } from './complexity.service';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,7 @@ import { MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/mate
     MatPaginatorModule,
     MatSortModule
   ],
-  providers: [],
+  providers: [ComplexityService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
