@@ -17,4 +17,12 @@ export class ComplexityService {
   getComplexityByDay() {
     return this.http.get<any>(BASE_URL + 'commit/timeOfDay');
   }
+
+  getComplexCommits() {
+    return this.http.get<any>(BASE_URL + 'commit/complexCommits');
+  }
+
+  getDeltaComplexityOverTime() {
+    return this.http.get<any>(BASE_URL + 'commit/deltaComplexityOverTime');
+  }
 }

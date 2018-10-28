@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ComplexityService } from './complexity.service';
+import { getStackedBarGraphData } from './common.operators';
+
 
 
 export interface ComplexityData {
@@ -22,26 +24,13 @@ export class AppComponent implements OnInit {
   complexityOverDayDataLoaded = false;
 
   ngOnInit() {
+    // complexity: date.complexity.value,
+    // complexityDensity: date.complexityDensity.value,
+    // difficulty: date.difficulty.value,
+    // effort: date.effort.value
     this.complexityService.getComplexityPerUserOverTime().subscribe(d => {
-      for (const bucket of (d.aggregations.user.buckets as any[])) {
-        // this.complexityOverTimeData[bucket.key] = {};
-        for (const date of bucket.date.buckets as any[]) {
-          // const complexityData = {
-            // complexity: date.complexity.value,
-            // complexityDensity: date.complexityDensity.value,
-            // difficulty: date.difficulty.value,
-            // effort: date.effort.value
-          // };
-          const data = {};
-          data[bucket.key] = date.complexityDensity.value;
-          this.complexityOverTimeData.push({
-            date: date.key,
-            data
-          });
-        }
-      }
-
-      console.log(this.complexityOverTimeData);
+      const temp =  getStackedBarGraphData(d, 'user');
+      this.complexityOverTimeData = temp.slice(temp.length - 30, temp.length);
     });
 
     this.complexityService.getComplexityByDay().subscribe(d => {
@@ -54,5 +43,7 @@ export class AppComponent implements OnInit {
       this.complexityOverDayData.forEach(data => data.key = days[data.key]);
       this.complexityOverDayDataLoaded = true;
     });
+
+    this.complexityService.getComplexCommits().subscribe(d => console.log(d));
   }
 }
