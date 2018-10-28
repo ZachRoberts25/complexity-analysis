@@ -11,6 +11,9 @@ import { TopComplexityListComponent } from './top-complexity-list/top-complexity
 import { StackedBarGraphComponent } from './stacked-bar-graph/stacked-bar-graph.component';
 import { PieChartComponent } from './pie-chart/pie-chart.component';
 import { LineGraphComponent } from './line-graph/line-graph.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { UserTableComponent } from './user-table/user-table.component';
+import { MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -21,11 +24,16 @@ import { LineGraphComponent } from './line-graph/line-graph.component';
     TopComplexityListComponent,
     StackedBarGraphComponent,
     PieChartComponent,
-    LineGraphComponent
+    LineGraphComponent,
+    UserTableComponent
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   providers: [],
   bootstrap: [AppComponent]
