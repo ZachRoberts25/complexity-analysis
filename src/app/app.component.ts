@@ -17,7 +17,7 @@ export interface ComplexityData {
 })
 export class AppComponent implements OnInit {
   title = 'ui';
-  constructor(private complexityService: ComplexityService ) { }
+  constructor(private complexityService: ComplexityService) { }
 
   complexityOverTimeData = [];
   complexityOverDayData = [];
@@ -25,19 +25,15 @@ export class AppComponent implements OnInit {
   deltaComplexityOverTime = [];
   complexCommits = [];
   ngOnInit() {
-    // complexity: date.complexity.value,
-    // complexityDensity: date.complexityDensity.value,
-    // difficulty: date.difficulty.value,
-    // effort: date.effort.value
     this.complexityService.getComplexityPerUserOverTime().subscribe(d => {
-      const temp =  getStackedBarGraphData(d, 'user');
-      this.complexityOverTimeData = temp.slice(temp.length - 30, temp.length);
+      const temp = getStackedBarGraphData(d, 'user');
+      this.complexityOverTimeData = temp;
     });
 
     this.complexityService.getComplexityByDay().subscribe(d => {
       const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
       for (const day of d.aggregations.dayOfWeek.buckets) {
-        const infoOverDay = {key: day.key - 1, value: day.complexityDensity.value};
+        const infoOverDay = { key: day.key - 1, value: day.complexityDensity.value };
         this.complexityOverDayData.push(infoOverDay);
       }
       this.complexityOverDayData.sort((a, b) => +a.key - +b.key);
@@ -49,7 +45,7 @@ export class AppComponent implements OnInit {
     this.complexityService.getDeltaComplexityOverTime().subscribe(d => {
       // console.log(getLineGraphData(d));
       const temp = getLineGraphData(d);
-      this.deltaComplexityOverTime = temp.slice(temp.length - 60, temp.length - 30);
+      this.deltaComplexityOverTime = temp;
     });
   }
 }

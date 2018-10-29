@@ -1,1 +1,11 @@
-<div #pieChart></div>
+<div class="container" [style.width.px]="width" [style.height.px]="height" fxLayout="row" fxLayoutGap="15px">
+  <div class="legend fade-in" fxFlex="15%" fxLayout="column wrap" fxLayoutGap="25px">
+    <div *ngFor="let key of keys" fxFlex class="key-container" fxLayout="row" fxFlex="15%">
+      <div class="circle" [style.background-color]="colorMap[key]"></div>
+      <div class="key">
+        <p>{{key}}</p>
+      </div>
+    </div>
+  </div>
+  <div #pieChart></div>
+</div>

@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppComponent } from './app.component';
 import { ProjectComplexityOverTimeComponent } from './project-complexity-over-time/project-complexity-over-time.component';
@@ -26,7 +26,7 @@ import { ComplexityService } from './complexity.service';
     StackedBarGraphComponent,
     PieChartComponent,
     LineGraphComponent,
-    UserTableComponent
+    UserTableComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,7 +34,9 @@ import { ComplexityService } from './complexity.service';
     BrowserAnimationsModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    FlexLayoutModule
+
   ],
   providers: [ComplexityService],
   bootstrap: [AppComponent]

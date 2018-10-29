@@ -1,5 +1,7 @@
-import { Component, OnInit, Input, OnChanges,
-  ViewEncapsulation, Output, EventEmitter, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import {
+  Component, OnInit, Input, OnChanges,
+  ViewEncapsulation, Output, EventEmitter, ViewChild, ElementRef, OnDestroy
+} from '@angular/core';
 import * as d3 from 'd3';
 import * as moment from 'moment';
 import { uuid, colors } from '../common.operators';
@@ -29,20 +31,18 @@ export class FileComplexityOverTimeComponent implements OnInit, OnChanges, OnDes
   svg: d3.Selection<any, any, any, any>;
   id = uuid();
 
-  constructor() { }
+  constructor(private el: ElementRef) { }
 
   ngOnInit() {
     if (this.data) {
       this.draw();
     }
-    console.log('hi');
   }
 
   ngOnChanges() {
     if (this.data) {
       this.draw();
     }
-    console.log('hi');
   }
 
   ngOnDestroy() {
@@ -60,8 +60,8 @@ export class FileComplexityOverTimeComponent implements OnInit, OnChanges, OnDes
       this.svg.remove();
     }
     const margin = { top: 10, right: 20, bottom: 20, left: 40 };
-    const elementWidth = this.width * .85;
-    const elementHeight = this.height;
+    const elementWidth = ((this.width || this.el.nativeElement.offsetWidth) * .85) - 15;
+    const elementHeight = (this.width || this.el.nativeElement.offsetHeight);
     const width = elementWidth - margin.left - margin.right;
     const height = elementHeight - margin.top - margin.bottom;
 
@@ -140,7 +140,7 @@ export class FileComplexityOverTimeComponent implements OnInit, OnChanges, OnDes
       .attr('x', (d) => x(d.data.date as any))
       .attr('y', (d) => y(d[1]))
       .attr('height', (d) => y(d[0]) - y(d[1]))
-      .attr('width', Math.floor(width / Math.abs(moment(x.domain()[0]).diff(moment(x.domain()[1]), 'days'))));
+      .attr('width', Math.floor((width) / Math.abs(moment(x.domain()[0]).diff(moment(x.domain()[1]), 'month'))) * .9);
 
     g.append('g')
       .attr('transform', `translate(0,${height})`)
@@ -148,8 +148,9 @@ export class FileComplexityOverTimeComponent implements OnInit, OnChanges, OnDes
       .call(d3.axisBottom(x));
 
     g.append('g')
+      .attr('transform', `translate(-5, 0)`)
       .attr('class', 'axis')
-      .call(d3.axisLeft(y))
+      .call(d3.axisLeft(y).ticks(0))
       ;
   }
 

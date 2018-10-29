@@ -17,10 +17,12 @@ export interface PieChartData {
 export class PieChartComponent implements OnChanges {
 
   @Input() data: PieChartData[];
-  @Input() width = 500;
-  @Input() height = 500;
+  @Input() width: number;
+  @Input() height: number;
   @ViewChild('pieChart') pieChart: ElementRef;
   id = uuid();
+  colorMap: { [key: string]: string } = {};
+  keys: string[];
 
   constructor(
     private el: ElementRef
@@ -28,21 +30,25 @@ export class PieChartComponent implements OnChanges {
 
   ngOnChanges() {
     if (this.data) {
+      let i = 0;
+      for (const d of this.data) {
+        this.colorMap[d.key] = colors[i];
+        i++;
+      }
+      this.keys = this.data.map(t => t.key);
       this.draw();
     }
   }
 
   draw() {
-    const width = this.width || this.el.nativeElement.offsetWidth;
-    const height = this.height || this.el.nativeElement.offsetHeight;
-    const radius = Math.min(width, height) / 2;
-
-    console.log(width, height, radius);
-    console.log('datas', this.data);
+    this.width = this.width || this.el.nativeElement.offsetWidth;
+    this.height = this.height || this.el.nativeElement.offsetHeight;
+    const radius = Math.min(this.width, this.height) / 2;
+    const donutWidth = 60;
 
     const arc = d3.arc<PieChartData>()
-      .outerRadius(0)
-      .innerRadius(radius);
+      .outerRadius(radius)
+      .innerRadius(radius - donutWidth);
 
     const pie = d3.pie<PieChartData>()
       .sort(null)
@@ -51,11 +57,11 @@ export class PieChartComponent implements OnChanges {
     this.pieChart.nativeElement.id = this.id;
 
     const svg = d3.select(`#${this.id}`).append('svg')
-      .attr('width', width)
-      .attr('height', height)
+      .attr('width', this.width)
+      .attr('height', this.height)
       .attr('class', 'fade-in')
       .append('g')
-      .attr('transform', `translate(${width / 2},${height / 2})`);
+      .attr('transform', `translate(${this.width / 2},${this.height / 2})`);
 
     const g = svg.selectAll('.arc')
       .data(pie(this.data))
@@ -65,27 +71,6 @@ export class PieChartComponent implements OnChanges {
 
     g.append('path')
       .attr('d', arc as any)
-      .style('fill', (d, i) => colors[i])
-      .attr('opacity', .6);
-
-    const total = this.getTotal();
-
-    g.append('text')
-      .attr('transform', (d) => `translate(${arc.centroid(d as any)})`)
-      .text((d) => `${d.data.key} ${Math.trunc((d.data.value / total) * 100)}%`)
-      .attr('fill', '#FF')
-      .attr('dx', '-1em')
-      // .style('white-space', 'nowrap')
-      .style('font-size', '12px')
-      .style('overflow', 'visible');
+      .style('fill', (d, i) => this.colorMap[d.data.key]);
   }
-
-  getTotal() {
-    let total = 0;
-    for (const d of this.data) {
-      total += d.value;
-    }
-    return total;
-  }
-
 }

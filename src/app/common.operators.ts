@@ -1,12 +1,13 @@
 import * as moment from 'moment';
+import * as  Color from 'color';
 
 export interface GraphableData {
-    [key: string]: {count: number, date: Date}[];
+    [key: string]: { count: number, date: Date }[];
 }
 
 export interface StackedBarGraphData {
     date: Date;
-    data: {[key: string]: number};
+    data: { [key: string]: number };
 }
 
 export interface LineGraphData {
@@ -17,8 +18,16 @@ export interface LineGraphData {
 export function uuid() {
     return '_' + Math.random().toString(36).substr(2, 9);
 }
-
-export const colors = ['#FFDBD3', '#EA9E8D', '#FA8163', '#D66641', '#E5E5E5', '#C5C5C5'];
+const color = '#E3CFE5';
+export const colors = [
+    color,
+    Color(color).darken(.2).toString(),
+    Color(color).darken(.3).toString(),
+    Color(color).darken(.5).toString(),
+    Color(color).darken(.6).toString(),
+    Color(color).darken(.7).toString(),
+    Color(color).darken(.8).toString()
+];
 
 export function getGraphableData(data: any, field: string, limit = 5) {
     const tempData: GraphableData = {};
