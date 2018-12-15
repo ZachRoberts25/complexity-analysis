@@ -2,7 +2,7 @@
   <div class="header" fxFlex="10%">
     <h1>Zach Roberts Git Complexity Analysis</h1>
   </div>
-  <div fxFlex class="top" fxLayout="row" fxLayoutGap="25px">
+  <div fxFlex="45%" class="top" fxLayout="row" fxLayoutGap="25px">
     <div fxFlex fxLayout="column" fxLayoutGap="25px">
       <div class="title" fxFlex="50px">
         <h2>High Level Stats</h2>
@@ -26,13 +26,13 @@
       <div class="title" fxFlex="50px">
         <h2>Logical Lines of Code Written per Month</h2>
       </div>
-      <app-stacked-bar-graph fxFlex *ngIf="complexityOverTimeData.length" [data]="complexityOverTimeData"></app-stacked-bar-graph>
+      <app-stacked-bar-graph fxFlex [data]="complexityOverTimeData"></app-stacked-bar-graph>
     </div>
     <div class="right" fxFlex fxLayout="column" fxLayoutGap="25px">
       <div class="title" fxFlex="50px">
         <h2>Logical Lines of Code Refactored per Month</h2>
       </div>
-      <app-stacked-bar-graph fxFlex *ngIf="complexityRefactorOverTimeData.length" [data]="complexityRefactorOverTimeData"></app-stacked-bar-graph>
+      <app-stacked-bar-graph fxFlex [data]="complexityRefactorOverTimeData"></app-stacked-bar-graph>
     </div>
   </div>
 
