@@ -1,9 +1,9 @@
 // tslint:disable-next-line:max-line-length
-// import { Component, Input, OnChanges, ViewEncapsulation, Output, EventEmitter, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+// import { Component, Input, OnChanges, ViewEncapsulation, Output, EventEmitter, ViewChild, ElementRef, OnDestroy, HostListener } from '@angular/core';
 import * as d3 from 'd3';
 import * as moment from 'moment';
 import { uuid, colors } from '../common.operators';
-import { Component, ViewEncapsulation, OnChanges, OnDestroy, Input, EventEmitter, Output, ElementRef, ViewChild } from '@angular/core';
+import { Component, ViewEncapsulation, OnChanges, OnDestroy, Input, EventEmitter, Output, ElementRef, ViewChild, HostListener } from '@angular/core';
 
 export interface StackedBarGraphData {
   date: Date;
@@ -31,6 +31,14 @@ export class StackedBarGraphComponent implements OnChanges, OnDestroy {
   id = uuid();
 
   constructor(private el: ElementRef) { }
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    if (this.data) {
+      this.draw();
+    }
+  }
+
 
   ngOnChanges() {
     if (this.data) {
@@ -77,10 +85,12 @@ export class StackedBarGraphComponent implements OnChanges, OnDestroy {
     const dates = new Set();
     for (const a of this.data) {
       dates.add(a.date);
-      stackData.push({ ...a.data, date: a.date as any as number });
       for (const key of Object.keys(a.data)) {
+        a.data[key] = Math.abs(a.data[key]);
         keys.add(key);
       }
+      stackData.push({ ...a.data, date: a.date as any as number });
+
     }
 
     this.keys = Array.from(keys);
@@ -97,7 +107,7 @@ export class StackedBarGraphComponent implements OnChanges, OnDestroy {
       .keys(this.keys)(stackData);
 
     const x = d3.scaleTime()
-      .rangeRound([0, width])
+      .rangeRound([0, width + margin.right])
       .domain(d3.extent(this.data, (d) => d.date));
 
     const y = d3.scaleLinear()
@@ -133,7 +143,7 @@ export class StackedBarGraphComponent implements OnChanges, OnDestroy {
       .attr('x', (d) => x(d.data.date as any))
       .attr('y', (d) => y(d[1]))
       .attr('height', (d) => y(d[0]) - y(d[1]))
-      .attr('width', Math.floor((width) / Math.abs(moment(x.domain()[0]).diff(moment(x.domain()[1]), 'month'))) * .85);
+      .attr('width', Math.floor((width) / Math.abs(moment(x.domain()[0]).diff(moment(x.domain()[1]), 'month'))) * .9);
 
     g.append('g')
       .attr('transform', `translate(0,${height})`)

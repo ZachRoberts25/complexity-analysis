@@ -14,6 +14,7 @@ import { UserTableComponent } from './user-table/user-table.component';
 import { MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material';
 import { ComplexityService } from './service/complexity.service';
 import { StackedBarGraphComponent } from './stacked-bar-graph/stacked-bar-graph.component';
+import { TimelineComponent } from './timeline/timeline.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { StackedBarGraphComponent } from './stacked-bar-graph/stacked-bar-graph.
     PieChartComponent,
     LineGraphComponent,
     UserTableComponent,
+    TimelineComponent,
   ],
   imports: [
     BrowserModule,

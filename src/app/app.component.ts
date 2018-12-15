@@ -20,32 +20,25 @@ export class AppComponent implements OnInit {
   constructor(private complexityService: ComplexityService) { }
 
   complexityOverTimeData = [];
+  complexityRefactorOverTimeData = [];
   complexityOverDayData = [];
   complexityOverDayDataLoaded = false;
   deltaComplexityOverTime = [];
+  timelineData = [];
   complexCommits = [];
   ngOnInit() {
-    this.complexityService.getComplexityPerUserOverTime().subscribe(d => {
+    this.complexityService.getComplexityPerUserOverTime(false).subscribe(d => {
       const temp = getStackedBarGraphData(d, 'framework', 'linesOfCode');
       this.complexityOverTimeData = temp.slice(2, temp.length);
     });
 
-    this.complexityService.getComplexityByDay().subscribe(d => {
-      const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-      for (const day of d.aggregations.dayOfWeek.buckets) {
-        const infoOverDay = { key: day.key - 1, value: day.complexityDensity.value };
-        this.complexityOverDayData.push(infoOverDay);
-      }
-      this.complexityOverDayData.sort((a, b) => +a.key - +b.key);
-      this.complexityOverDayData.forEach(data => data.key = days[data.key]);
-      this.complexityOverDayDataLoaded = true;
+    this.complexityService.getComplexityPerUserOverTime(true).subscribe(d => {
+      const temp = getStackedBarGraphData(d, 'framework', 'linesOfCode');
+      this.complexityRefactorOverTimeData = temp.slice(2, temp.length);
     });
 
-    // this.complexityService.getComplexCommits().subscribe(d => this.complexCommits = d);
-    this.complexityService.getDeltaComplexityOverTime().subscribe(d => {
-      // console.log(getLineGraphData(d));
-      const temp = getLineGraphData(d);
-      this.deltaComplexityOverTime = temp;
+    this.complexityService.getStartEndByProject().subscribe((data) => {
+      this.timelineData = data;
     });
   }
 }
