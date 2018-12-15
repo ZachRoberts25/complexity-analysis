@@ -28,6 +28,10 @@ export class AppComponent implements OnInit {
   Object = Object;
   ngOnInit() {
     this.complexityService.getComplexityPerUserOverTime(false).subscribe(d => {
+      // for (const v of d) {
+      //   v.date = new Date(v.date);
+      // }
+      // this.complexityOverTimeData = d;
       const temp = getStackedBarGraphData(d, 'framework', 'linesOfCode');
       this.complexityOverTimeData = temp.slice(2, temp.length);
     });
