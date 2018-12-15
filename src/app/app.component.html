@@ -1,6 +1,7 @@
 <div class="container" fxLayout="column" fxLayoutGap="25px">
   <div class="header" fxFlex="10%">
-    <h1>Zach Roberts Git Complexity Analysis</h1>
+    <h1>Zach Roberts Git Complexity Analysis <a target="_blank" href="https://en.wikipedia.org/wiki/Cyclomatic_complexity">complexity
+        explained</a></h1>
   </div>
   <div fxFlex="45%" class="top" fxLayout="row" fxLayoutGap="25px">
     <div fxFlex fxLayout="column" fxLayoutGap="25px">
@@ -10,7 +11,9 @@
       <div fxLayout="column" fxFlex>
         <div *ngFor="let key of Object.keys(highLevelStats)" fxLayout="row" class="stats" fxFlex>
           <p fxFlex="75%">{{camelToTitle(key) | uppercase}}</p>
-          <p fxFlex>{{highLevelStats[key] | number}} {{key.includes('time') ? 'hours': ''}}</p>
+          <p fxFlex *ngIf="!key.includes('Date')">{{highLevelStats[key] | number}} {{key.includes('time') ? 'hours':
+            ''}}</p>
+          <p fxFlex *ngIf="key.includes('Date')">{{highLevelStats[key] | date}} </p>
         </div>
       </div>
     </div>

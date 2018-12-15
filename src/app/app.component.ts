@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ComplexityService } from './service/complexity.service';
 import { getStackedBarGraphData, getLineGraphData } from './common.operators';
+import * as d3 from 'd3';
 
 export interface ComplexityData {
   complexity: number;
@@ -26,6 +27,8 @@ export class AppComponent implements OnInit {
   complexCommits = [];
   highLevelStats = {};
   Object = Object;
+  start: Date;
+  end: Date;
   ngOnInit() {
     this.complexityService.getComplexityPerUserOverTime(false).subscribe(d => {
       this.complexityOverTimeData = d;
@@ -41,14 +44,19 @@ export class AppComponent implements OnInit {
 
     this.complexityService.getStartEndByProject().subscribe((data) => {
       this.timelineData = data;
+      this.getStartEndDate();
+      this.complexityService.getHighLevelStats().subscribe((stats) => {
+        this.highLevelStats = { startDate: this.start, endDate: this.end, ...stats };
+      });
     });
 
-    this.complexityService.getHighLevelStats().subscribe((stats) => {
-      this.highLevelStats = stats;
-    });
   }
 
   camelToTitle(str: string) {
     return str.replace(/([A-Z]+)*([A-Z][a-z])/g, '$1 $2');
+  }
+
+  getStartEndDate() {
+    [this.start, this.end] = [new Date(d3.min(this.timelineData, (d) => d.start)), new Date(d3.max(this.timelineData, (d) => d.end))]
   }
 }

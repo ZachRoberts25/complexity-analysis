@@ -13,6 +13,13 @@ $graph: #E3CFE5;
   .header {
     border-bottom: 1px solid $border-color;
     text-transform: uppercase;
+    a {
+      color: $text-color;
+      text-decoration: none;
+      text-decoration: underline;
+      text-transform: lowercase;
+      font-size: 16px;
+    }
   }
   .title {
     background-color: $header-color;

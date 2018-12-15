@@ -42,6 +42,7 @@ export class ComplexityService {
   }
 
   getHighLevelStats() {
+    // tslint:disable-next-line:max-line-length
     return of({ "logicalLines": 16075, "logicalLinesRefactored": 8509, "physicalLines": 22995, "physicalLinesRefactored": 12791, "timeSpent": 755, "timeSpentRefactoring": 445, "projects": 11 });
   }
 
