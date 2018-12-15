@@ -63,8 +63,8 @@ export class TimelineComponent implements OnChanges, OnDestroy {
     if (this.svg) {
       this.svg.remove();
     }
-    const margin = { top: 10, right: 20, bottom: 20, left: 80 };
-    const elementWidth = ((this.width || this.el.nativeElement.offsetWidth) * .85) - 15;
+    const margin = { top: 10, right: 20, bottom: 20, left: 100 };
+    const elementWidth = this.width || this.el.nativeElement.offsetWidth;
     const elementHeight = (this.width || this.el.nativeElement.offsetHeight);
     const width = elementWidth - margin.left - margin.right;
     const height = elementHeight - margin.top - margin.bottom;

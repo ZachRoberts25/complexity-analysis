@@ -30,4 +30,8 @@ export class ComplexityService {
   getDeltaComplexityOverTime() {
     return this.http.get<any>(BASE_URL + 'commit/deltaComplexityOverTime');
   }
+
+  getHighLevelStats() {
+    return this.http.get<TimelineData[]>(BASE_URL + 'user/high-level-stats');
+  }
 }

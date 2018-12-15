@@ -1,6 +1,23 @@
 <div class="container" fxLayout="column" fxLayoutGap="25px">
   <h1 fxFlex="5%" class="header">Zach Roberts</h1>
-  <div fxFlex="35%" class="top" fxLayout="row">
+  <div fxFlex class="top" fxLayout="row" fxLayoutGap="25px">
+    <div fxFlex fxLayout="column" fxLayoutGap="25px">
+      <div class="title" fxFlex="50px">
+        <h2>High Level Stats</h2>
+        <div *ngFor="let key of Object.keys(highLevelStats)" fxLayout="row" class="stats">
+          <p fxFlex>{{camelToTitle(key) | uppercase}}</p>
+          <p fxFlex>{{highLevelStats[key] | number}} {{key.includes('time') ? 'hours': ''}}</p>
+        </div>
+      </div>
+    </div>
+    <div fxFlex="70%" fxLayout="column" fxLayoutGap="25px">
+      <div class="title" fxFlex="50px">
+        <h2>Project Timeline</h2>
+      </div>
+      <app-timeline fxFlex [data]="timelineData"></app-timeline>
+    </div>
+  </div>
+  <div fxFlex="35%" class="middle" fxLayout="row">
     <div class="left" fxFlex="50%" fxLayout="column" fxLayoutGap="25px">
       <div class="title" fxFlex="50px">
         <h2>Logical Lines of Code Written per Month</h2>
@@ -14,12 +31,5 @@
       <app-stacked-bar-graph fxFlex *ngIf="complexityRefactorOverTimeData.length" [data]="complexityRefactorOverTimeData"></app-stacked-bar-graph>
     </div>
   </div>
-  <div fxFlex class="middle" fxLayout="column" fxLayoutGap="25px">
-    <div class="title" fxFlex="50px">
-      <h2>Project Timeline</h2>
-    </div>
-    <div fxLayout="row" fxFlex>
-      <app-timeline fxFlex="65%" [data]="timelineData"></app-timeline>
-    </div>
-  </div>
+
 </div>

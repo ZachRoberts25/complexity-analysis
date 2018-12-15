@@ -33,8 +33,9 @@ $graph: #E3CFE5;
   .bottom {
     margin-top: 25px;
   }
-  app-file-complexity-over-time,
-  app-pie-chart {
+  app-stacked-bar-graph,
+  app-timeline,
+  .stats {
     margin-left: 25px;
   }
 }

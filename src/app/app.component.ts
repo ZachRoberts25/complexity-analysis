@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ComplexityService } from './service/complexity.service';
 import { getStackedBarGraphData, getLineGraphData } from './common.operators';
 
-
-
 export interface ComplexityData {
   complexity: number;
   complexityDensity: number;
@@ -26,6 +24,8 @@ export class AppComponent implements OnInit {
   deltaComplexityOverTime = [];
   timelineData = [];
   complexCommits = [];
+  highLevelStats = {};
+  Object = Object;
   ngOnInit() {
     this.complexityService.getComplexityPerUserOverTime(false).subscribe(d => {
       const temp = getStackedBarGraphData(d, 'framework', 'linesOfCode');
@@ -40,5 +40,13 @@ export class AppComponent implements OnInit {
     this.complexityService.getStartEndByProject().subscribe((data) => {
       this.timelineData = data;
     });
+
+    this.complexityService.getHighLevelStats().subscribe((stats) => {
+      this.highLevelStats = stats;
+    });
+  }
+
+  camelToTitle(str: string) {
+    return str.replace(/([A-Z]+)*([A-Z][a-z])/g, '$1 $2');
   }
 }
