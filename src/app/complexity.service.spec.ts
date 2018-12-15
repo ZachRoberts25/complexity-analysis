@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { ComplexityService } from './complexity.service';
+import { ComplexityService } from './service/complexity.service';
 
 describe('ComplexityService', () => {
   beforeEach(() => {

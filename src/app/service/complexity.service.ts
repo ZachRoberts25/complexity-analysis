@@ -11,7 +11,7 @@ export class ComplexityService {
   constructor(private http: HttpClient) { }
 
   getComplexityPerUserOverTime() {
-    return this.http.get<any>(BASE_URL + 'commit');
+    return this.http.get<any>(BASE_URL + 'user/framework-by-date');
   }
 
   getComplexityByDay() {

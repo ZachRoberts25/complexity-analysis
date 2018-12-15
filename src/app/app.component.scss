@@ -7,17 +7,18 @@ $graph: #E3CFE5;
 .container {
   background-color: $background;
   width: 100%;
-  height: 100%;
   color: $text-color;
   padding: 2em;
   h1 {
     border-bottom: 1px solid $border-color;
+    text-transform: uppercase;
   }
   .title {
     background-color: $header-color;
     h2 {
       margin: .25em;
       margin-left: 1em;
+      text-transform: uppercase;
     }
   }
   .left {
@@ -26,5 +27,13 @@ $graph: #E3CFE5;
   }
   .right {
     padding-left: 25px;
+  }
+  .middle,
+  .bottom {
+    margin-top: 25px;
+  }
+  app-file-complexity-over-time,
+  app-pie-chart {
+    margin-left: 25px;
   }
 }

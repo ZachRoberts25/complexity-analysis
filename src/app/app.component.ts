@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ComplexityService } from './complexity.service';
+import { ComplexityService } from './service/complexity.service';
 import { getStackedBarGraphData, getLineGraphData } from './common.operators';
 
 
@@ -26,8 +26,8 @@ export class AppComponent implements OnInit {
   complexCommits = [];
   ngOnInit() {
     this.complexityService.getComplexityPerUserOverTime().subscribe(d => {
-      const temp = getStackedBarGraphData(d, 'user');
-      this.complexityOverTimeData = temp;
+      const temp = getStackedBarGraphData(d, 'framework', 'linesOfCode');
+      this.complexityOverTimeData = temp.slice(2, temp.length);
     });
 
     this.complexityService.getComplexityByDay().subscribe(d => {

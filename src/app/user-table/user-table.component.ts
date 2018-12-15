@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatSort } from '@angular/material';
 import { UserTableDataSource } from './user-table-datasource';
-import { ComplexityService } from 'src/app/complexity.service';
+import { ComplexityService } from 'src/app/service/complexity.service';
 
 @Component({
   selector: 'app-user-table',
@@ -16,7 +16,7 @@ export class UserTableComponent implements OnInit {
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['authorName', 'hashKey', 'message', 'date', 'complexity'];
 
-  constructor(private service: ComplexityService) {}
+  constructor(private service: ComplexityService) { }
 
 
   ngOnInit() {

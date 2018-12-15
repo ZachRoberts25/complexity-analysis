@@ -21,12 +21,10 @@ export function uuid() {
 const color = '#E3CFE5';
 export const colors = [
     color,
-    Color(color).darken(.2).toString(),
     Color(color).darken(.3).toString(),
     Color(color).darken(.5).toString(),
-    Color(color).darken(.6).toString(),
-    Color(color).darken(.7).toString(),
-    Color(color).darken(.8).toString()
+    Color(color).darken(.65).toString(),
+    Color(color).darken(.85).toString()
 ];
 
 export function getGraphableData(data: any, field: string, limit = 5) {
@@ -50,7 +48,7 @@ export function getGraphableData(data: any, field: string, limit = 5) {
     return tempData;
 }
 
-export function getStackedBarGraphData(data: any, field: string) {
+export function getStackedBarGraphData(data: any, field: string, field2: string) {
     const dateMap = new Map<string, { [key: string]: number }>();
     const ret: StackedBarGraphData[] = [];
     for (const a of data.aggregations[field].buckets) {
@@ -59,12 +57,12 @@ export function getStackedBarGraphData(data: any, field: string) {
                 const c = dateMap.get(b.key);
                 if (c[a.key]) {
 
-                    c[a.key] += b.complexityDensity.value;
+                    c[a.key] += b[field2].value;
                 } else {
-                    c[a.key] = b.complexityDensity.value;
+                    c[a.key] = b[field2].value;
                 }
             } else {
-                dateMap.set(b.key, { [a.key]: b.complexityDensity.value });
+                dateMap.set(b.key, { [a.key]: b[field2].value });
             }
         }
     }

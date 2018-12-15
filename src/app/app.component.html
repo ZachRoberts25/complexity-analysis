@@ -1,23 +1,29 @@
-<div class="container" fxLayout="column">
+<div class="container" fxLayout="column" fxLayoutGap="25px">
   <h1 fxFlex="10%" class="header">Hirepower Breakdown</h1>
-  <div fxFlex="350px" class="top" fxLayout="row">
-    <div class="left" fxFlex="50%" fxLayout="column" fxLayoutGap="25px">
-      <div class="title" fxFlex="15%">
-        <h2>Complexity over Time</h2>
+  <div fxFlex="250px" class="top" fxLayout="row">
+    <div class="left" fxFlex="65%" fxLayout="column" fxLayoutGap="25px">
+      <div class="title" fxFlex="50px">
+        <h2>Level of Effort per Month</h2>
       </div>
-      <app-file-complexity-over-time fxFlex *ngIf="complexityOverTimeData.length" [data]="complexityOverTimeData"></app-file-complexity-over-time>
+      <app-stacked-bar-graph fxFlex *ngIf="complexityOverTimeData.length" [data]="complexityOverTimeData"></app-stacked-bar-graph>
     </div>
-    <div class="right" fxFlex="50%" fxLayout="column" fxLayoutGap="25px">
-      <div class="title" fxFlex="15%">
-        <h2>Complexity By Day of Week</h2>
+    <div class="right" fxFlex fxLayout="column" fxLayoutGap="25px">
+      <div class="title" fxFlex="50px">
+        <h2>Complexity Density per Day of Week</h2>
       </div>
       <app-pie-chart fxFlex *ngIf="complexityOverDayDataLoaded" [data]="complexityOverDayData"></app-pie-chart>
     </div>
   </div>
-  <div fxFlex="30%" class="middle"></div>
-  <div fxFLex="30%" class="bottom"></div>
-  <!-- 
-  
-  <app-line-graph *ngIf="deltaComplexityOverTime.length" [data]="deltaComplexityOverTime"></app-line-graph>
-  <app-user-table></app-user-table> -->
+  <div fxFlex="250px" class="middle" fxLayout="column" fxLayoutGap="25px">
+    <div class="title" fxFlex="50px">
+      <h2>Complexity Change over Time</h2>
+    </div>
+    <app-line-graph fxFlex="85%" *ngIf="deltaComplexityOverTime.length" [data]="deltaComplexityOverTime"></app-line-graph>
+  </div>
+  <div fxFLex="250px" class="bottom" fxLayout="column">
+    <div class="title" fxFlex="50px">
+      <h2>Most Complex Commits</h2>
+    </div>
+    <app-user-table fxFlex></app-user-table>
+  </div>
 </div>

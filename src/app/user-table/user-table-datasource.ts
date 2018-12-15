@@ -2,7 +2,7 @@ import { DataSource } from '@angular/cdk/collections';
 import { MatPaginator, MatSort } from '@angular/material';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
-import { ComplexityService } from '../complexity.service';
+import { ComplexityService } from '../service/complexity.service';
 
 export class UserTableDataSource extends DataSource<any> {
 
@@ -14,5 +14,5 @@ export class UserTableDataSource extends DataSource<any> {
     return this.service.getComplexCommits();
   }
 
-  disconnect() {}
+  disconnect() { }
 }

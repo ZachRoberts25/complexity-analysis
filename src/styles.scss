@@ -1,4 +1,37 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+$border-color: #ffffff;
+$text-color: $border-color;
+$background: #00323B;
+html,
+body {
+  height: 100%;
+  font-family: 'Assistant', sans-serif !important;
+}
+
+body {
+  margin: 0;
+}
+
+.mat-table {
+  background: transparent;
+}
+
+td,
+th {
+  color: $text-color !important;
+}
+
+.mat-header-cell {
+  border-color: $border-color !important;
+}
+
+#number-0,
+#number-2,
+#number-4 {
+  background-color: #254D55 !important;
+}
+
+.mat-table {
+  font-family: 'Assistant', sans-serif !important;
+}

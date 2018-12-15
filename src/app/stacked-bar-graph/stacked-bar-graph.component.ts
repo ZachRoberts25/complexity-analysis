@@ -30,7 +30,7 @@ export class StackedBarGraphComponent implements OnChanges, OnDestroy {
   svg: d3.Selection<any, any, any, any>;
   id = uuid();
 
-  constructor() { }
+  constructor(private el: ElementRef) { }
 
   ngOnChanges() {
     if (this.data) {
@@ -45,7 +45,7 @@ export class StackedBarGraphComponent implements OnChanges, OnDestroy {
   }
 
   formatDate(date: Date) {
-    return moment(date).format('YYYY/MM/DD');
+    return moment(date).format('MM/DD/YYYY');
   }
 
   draw() {
@@ -53,8 +53,8 @@ export class StackedBarGraphComponent implements OnChanges, OnDestroy {
       this.svg.remove();
     }
     const margin = { top: 10, right: 20, bottom: 20, left: 40 };
-    const elementWidth = this.width * .85;
-    const elementHeight = this.height;
+    const elementWidth = ((this.width || this.el.nativeElement.offsetWidth) * .85) - 15;
+    const elementHeight = (this.width || this.el.nativeElement.offsetHeight);
     const width = elementWidth - margin.left - margin.right;
     const height = elementHeight - margin.top - margin.bottom;
 
@@ -102,7 +102,7 @@ export class StackedBarGraphComponent implements OnChanges, OnDestroy {
 
     const y = d3.scaleLinear()
       .range([height, 0])
-      .domain([0, d3.max(this.data, (d) => calcTotal(d.data))]).nice();
+      .domain([d3.min(this.data, (d) => calcTotal(d.data)), d3.max(this.data, (d) => calcTotal(d.data))]).nice();
 
     const z = d3.scaleOrdinal()
       .range(this.colors)
@@ -133,7 +133,7 @@ export class StackedBarGraphComponent implements OnChanges, OnDestroy {
       .attr('x', (d) => x(d.data.date as any))
       .attr('y', (d) => y(d[1]))
       .attr('height', (d) => y(d[0]) - y(d[1]))
-      .attr('width', Math.floor(width / Math.abs(moment(x.domain()[0]).diff(moment(x.domain()[1]), 'days'))));
+      .attr('width', Math.floor((width) / Math.abs(moment(x.domain()[0]).diff(moment(x.domain()[1]), 'month'))) * .85);
 
     g.append('g')
       .attr('transform', `translate(0,${height})`)
@@ -141,6 +141,7 @@ export class StackedBarGraphComponent implements OnChanges, OnDestroy {
       .call(d3.axisBottom(x));
 
     g.append('g')
+      .attr('transform', `translate(-5, 0)`)
       .attr('class', 'axis')
       .call(d3.axisLeft(y))
       ;

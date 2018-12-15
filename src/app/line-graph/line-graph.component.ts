@@ -22,15 +22,15 @@ export interface MarginOptions {
 })
 export class LineGraphComponent implements OnChanges, OnDestroy {
   @Input() data: LineGraphData[];
-  @Input() width = 500;
-  @Input() height = 500;
+  @Input() width: number;
+  @Input() height: number;
   @Input() margin: MarginOptions;
-  @Input() color = '#C5C5C5';
-  @Input() withArea: boolean;
-  @Input() withGradient: boolean;
+  @Input() color = '#E3CFE5';
+  @Input() withArea = true;
+  @Input() withGradient = true;
   @Input() withGrid = false;
   @Input() withAxis = true;
-  @Input() ticks = 2;
+  @Input() ticks = 4;
   svg: d3.Selection<d3.BaseType, LineGraphData, HTMLElement, any>;
 
   id: string;
@@ -73,7 +73,7 @@ export class LineGraphComponent implements OnChanges, OnDestroy {
       .append('svg')
       .attr('width', width + margin.left + margin.right)
       .attr('height', height + margin.top + margin.bottom);
-      // .attr('class', this.fade ? 'fade-in' : '');
+    // .attr('class', this.fade ? 'fade-in' : '');
 
     const g = this.svg
       .append('g')
@@ -146,7 +146,7 @@ export class LineGraphComponent implements OnChanges, OnDestroy {
       g.append('g')
         .attr('class', 'y-axis')
         .call(d3.axisLeft(y)
-          .ticks(2)
+          .ticks(this.ticks)
         );
     }
 
