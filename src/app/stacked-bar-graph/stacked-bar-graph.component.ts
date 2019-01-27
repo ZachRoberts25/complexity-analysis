@@ -29,6 +29,11 @@ export class StackedBarGraphComponent implements OnChanges, OnDestroy {
   keys: string[];
   svg: d3.Selection<any, any, any, any>;
   id = uuid();
+  hrefKeyMap = {
+    travetto: 'https://travetto.io/landing',
+    angularjs: 'https://angularjs.org/',
+    angular: 'https://angular.io/'
+  };
 
   constructor(private el: ElementRef) { }
 
@@ -60,8 +65,8 @@ export class StackedBarGraphComponent implements OnChanges, OnDestroy {
     if (this.svg) {
       this.svg.remove();
     }
-    const margin = { top: 10, right: 20, bottom: 20, left: 40 };
-    const elementWidth = ((this.width || this.el.nativeElement.offsetWidth) * .85) - 15;
+    const margin = { top: 10, right: 20, bottom: 20, left: 170 };
+    const elementWidth = ((this.width || this.el.nativeElement.offsetWidth)) - 15;
     const elementHeight = (this.width || this.el.nativeElement.offsetHeight);
     const width = elementWidth - margin.left - margin.right;
     const height = elementHeight - margin.top - margin.bottom;
@@ -153,7 +158,16 @@ export class StackedBarGraphComponent implements OnChanges, OnDestroy {
     g.append('g')
       .attr('transform', `translate(-5, 0)`)
       .attr('class', 'axis')
-      .call(d3.axisLeft(y))
-      ;
+      .call(d3.axisLeft(y));
+
+    g.append('text')
+      .attr('transform', 'rotate(-90)')
+      .attr('y', 0 - margin.left)
+      .attr('x', 0 - (height / 2))
+      .attr('dy', '1em')
+      .style('text-anchor', 'middle')
+      .style('font-size', '2em')
+      .attr('fill', '#fff')
+      .text('LOGICAL CODE LINES');
   }
 }

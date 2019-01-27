@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { TimelineData } from '../timeline/timeline.component';
-import { environment } from '../../environments/environment';
 import { of } from 'rxjs';
 
 const BASE_URL = '/api/';

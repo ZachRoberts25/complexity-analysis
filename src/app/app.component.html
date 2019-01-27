@@ -1,42 +1,63 @@
-<div class="container" fxLayout="column" fxLayoutGap="25px">
-  <div class="header" fxFlex="10%">
-    <h1>Zach Roberts Git Complexity Analysis <a target="_blank" href="https://en.wikipedia.org/wiki/Cyclomatic_complexity">complexity
-        explained</a></h1>
+<div class="container">
+  <div class="page page-1" id="page-1">
+    <h1>Hello, I am <strong class="highlight">Zach Roberts.</strong><br>
+      I am a software engineer.<br>
+    </h1>
   </div>
-  <div fxFlex="45%" class="top" fxLayout="row" fxLayoutGap="25px">
-    <div fxFlex fxLayout="column" fxLayoutGap="25px">
-      <div class="title" fxFlex="50px">
-        <h2>High Level Stats</h2>
-      </div>
-      <div fxLayout="column" fxFlex>
-        <div *ngFor="let key of Object.keys(highLevelStats)" fxLayout="row" class="stats" fxFlex>
-          <p fxFlex="75%">{{camelToTitle(key) | uppercase}}</p>
-          <p fxFlex *ngIf="!key.includes('Date')">{{highLevelStats[key] | number}} {{key.includes('time') ? 'hours':
-            ''}}</p>
-          <p fxFlex *ngIf="key.includes('Date')">{{highLevelStats[key] | date}} </p>
-        </div>
-      </div>
-    </div>
-    <div fxFlex="70%" fxLayout="column" fxLayoutGap="25px">
-      <div class="title" fxFlex="50px">
-        <h2>Project Timeline</h2>
-      </div>
-      <app-timeline fxFlex [data]="timelineData"></app-timeline>
-    </div>
+  <div class="icon-container">
+    <mat-icon (click)="page2.scrollIntoView({behavior: 'smooth', block: 'start'})">arrow_downward</mat-icon>
   </div>
-  <div fxFlex="35%" class="middle" fxLayout="row">
-    <div class="left" fxFlex="50%" fxLayout="column" fxLayoutGap="25px">
-      <div class="title" fxFlex="50px">
-        <h2>Logical Lines of Code Written per Month</h2>
-      </div>
-      <app-stacked-bar-graph fxFlex [data]="complexityOverTimeData"></app-stacked-bar-graph>
-    </div>
-    <div class="right" fxFlex fxLayout="column" fxLayoutGap="25px">
-      <div class="title" fxFlex="50px">
-        <h2>Logical Lines of Code Refactored per Month</h2>
-      </div>
-      <app-stacked-bar-graph fxFlex [data]="complexityRefactorOverTimeData"></app-stacked-bar-graph>
-    </div>
+  <div class="page page-2" #page2>
+    <h1>Explanation of Data</h1>
+    <p>The following graphs and statistics were calculated by running projects through a complexity analysis using a
+      javascript library called <a href="https://www.npmjs.com/package/typhonjs-escomplex" target="_blank">escomplex</a>.
+      The output of
+      the analysis is a report
+      including
+      <a href="https://en.wikipedia.org/wiki/Halstead_complexity_measures" target="_blank">Halstead Complexity Measures</a>,
+      <a href="https://en.wikipedia.org/wiki/Source_lines_of_code" target="_blank">Sloc</a>,
+      and
+      <a href="https://en.wikipedia.org/wiki/Cyclomatic_complexity" target="_blank">Cyclomatic Complexity</a>. The
+      report was then
+      aggregated to show the cool statistics you see below.</p>
+    <h2>High level Statistics
+    </h2>
+    <mat-list>
+      <mat-list-item>
+        <strong class="highlight">{{highLevelStats.projects}}</strong>&nbsp; projects across &nbsp;
+        <strong class="highlight">{{daysCalculated}} </strong>&nbsp; days
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>
+        <strong class="highlight">
+          {{highLevelStats.physicalLines + highLevelStats.physicalLinesRefactored | number}}
+        </strong>
+        &nbsp; physical lines of code written
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>
+        <strong class="highlight">
+          {{highLevelStats.logicalLines + highLevelStats.logicalLinesRefactored | number}}
+        </strong>
+        &nbsp; logical lines of code written
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item><strong class="highlight">{{highLevelStats.timeSpent + highLevelStats.timeSpentRefactoring}}</strong>&nbsp;
+        hours spent writing code</mat-list-item>
+    </mat-list>
   </div>
-
+  <div class="icon-container inverse">
+    <mat-icon (click)="page3.scrollIntoView({behavior: 'smooth', block: 'start'})">arrow_downward</mat-icon>
+  </div>
+  <div class="page page-3" #page3 fxLayout="column" fxLayoutGap="5%">
+    <h1 fxFlex="10%">Project Timeline</h1>
+    <app-timeline fxFlex="70%" [data]="timelineData"></app-timeline>
+  </div>
+  <div class="icon-container">
+    <mat-icon (click)="page4.scrollIntoView({behavior: 'smooth', block: 'start'})">arrow_downward</mat-icon>
+  </div>
+  <div class="page page-4" #page4 fxLayout="column">
+    <h1 fxFlex="10%">Framework Experience</h1>
+    <app-stacked-bar-graph fxFlex [data]="complexityOverTimeData"></app-stacked-bar-graph>
+  </div>
 </div>

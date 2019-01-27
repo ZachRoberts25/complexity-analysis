@@ -11,7 +11,7 @@ import { PieChartComponent } from './pie-chart/pie-chart.component';
 import { LineGraphComponent } from './line-graph/line-graph.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserTableComponent } from './user-table/user-table.component';
-import { MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material';
+import { MatTableModule, MatPaginatorModule, MatSortModule, MatButton, MatButtonModule, MatListModule, MatIconModule } from '@angular/material';
 import { ComplexityService } from './service/complexity.service';
 import { StackedBarGraphComponent } from './stacked-bar-graph/stacked-bar-graph.component';
 import { TimelineComponent } from './timeline/timeline.component';
@@ -35,7 +35,10 @@ import { TimelineComponent } from './timeline/timeline.component';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatButtonModule,
+    MatListModule,
+    MatIconModule
 
   ],
   providers: [ComplexityService],

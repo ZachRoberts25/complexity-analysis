@@ -1,21 +1,8 @@
 import { Component, OnInit, Input, OnChanges, ElementRef, HostListener, OnDestroy } from '@angular/core';
 import * as d3 from 'd3';
 import { uuid } from '../common.operators';
-import * as  Color from 'color';
 
-const color = '#E3CFE5';
-export const colors = [
-  color,
-  Color(color).darken(.1).toString(),
-  Color(color).darken(.2).toString(),
-  Color(color).darken(.3).toString(),
-  Color(color).darken(.4).toString(),
-  Color(color).darken(.5).toString(),
-  Color(color).darken(.6).toString(),
-  Color(color).darken(.7).toString(),
-  Color(color).darken(.8).toString(),
-  Color(color).darken(.9).toString()
-];
+const color = '#7b1fa2';
 
 export interface TimelineData {
   start: Date;
@@ -63,21 +50,11 @@ export class TimelineComponent implements OnChanges, OnDestroy {
     if (this.svg) {
       this.svg.remove();
     }
-    const margin = { top: 10, right: 20, bottom: 20, left: 100 };
+    const margin = { top: 10, right: 20, bottom: 20, left: 170 };
     const elementWidth = this.width || this.el.nativeElement.offsetWidth;
     const elementHeight = (this.width || this.el.nativeElement.offsetHeight);
     const width = elementWidth - margin.left - margin.right;
     const height = elementHeight - margin.top - margin.bottom;
-
-    let i = 0;
-    for (const d of this.data) {
-      if (this.colorMap[d.project]) {
-        continue;
-      }
-      this.colorMap[d.project] = colors[i];
-      i++;
-    }
-
     this.el.nativeElement.id = uuid();
 
     this.svg = d3.select(`#${this.el.nativeElement.id}`)
@@ -123,7 +100,18 @@ export class TimelineComponent implements OnChanges, OnDestroy {
       })
       .attr('y', (d) => y(d.project))
       .attr('width', (d) => x(new Date(d.end)) - x(new Date(d.start)))
-      .attr('height', Math.floor(height / projectNumber.size) - 5)
-      .attr('fill', (d) => this.colorMap[d.project]);
+      .attr('height', Math.floor(height / (projectNumber.size + 8)))
+      .attr('fill', (d, i) => i % 2 === 0 ? '#fff' : color);
+
+    g.append('text')
+      .attr('transform', 'rotate(-90)')
+      .attr('y', 0 - margin.left)
+      .attr('x', 0 - (height / 2))
+      .attr('dy', '1em')
+      .style('text-anchor', 'middle')
+      .style('font-size', '2em')
+      .attr('fill', '#fff')
+      .text('PROJECTS');
   }
+
 }

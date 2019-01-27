@@ -18,13 +18,12 @@ export interface LineGraphData {
 export function uuid() {
     return '_' + Math.random().toString(36).substr(2, 9);
 }
-const color = '#E3CFE5';
+const color = '#7b1fa2';
 export const colors = [
+    // '#fff',
+    Color(color).lighten(.99).toString(),
+    Color(color).lighten(.65).toString(),
     color,
-    Color(color).darken(.3).toString(),
-    Color(color).darken(.5).toString(),
-    Color(color).darken(.65).toString(),
-    Color(color).darken(.85).toString()
 ];
 
 export function getGraphableData(data: any, field: string, limit = 5) {

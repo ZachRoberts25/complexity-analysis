@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { ComplexityService } from './service/complexity.service';
 import { getStackedBarGraphData, getLineGraphData } from './common.operators';
 import * as d3 from 'd3';
+import * as  moment from 'moment';
 
 export interface ComplexityData {
   complexity: number;
@@ -25,10 +26,12 @@ export class AppComponent implements OnInit {
   deltaComplexityOverTime = [];
   timelineData = [];
   complexCommits = [];
-  highLevelStats = {};
+  highLevelStats: { [key: string]: any } = {};
   Object = Object;
   start: Date;
   end: Date;
+  daysCalculated: number;
+
   ngOnInit() {
     this.complexityService.getComplexityPerUserOverTime(false).subscribe(d => {
       this.complexityOverTimeData = d;
@@ -57,6 +60,7 @@ export class AppComponent implements OnInit {
   }
 
   getStartEndDate() {
-    [this.start, this.end] = [new Date(d3.min(this.timelineData, (d) => d.start)), new Date(d3.max(this.timelineData, (d) => d.end))]
+    [this.start, this.end] = [new Date(d3.min(this.timelineData, (d) => d.start)), new Date(d3.max(this.timelineData, (d) => d.end))];
+    this.daysCalculated = moment(this.end).diff(this.start, 'd');
   }
 }

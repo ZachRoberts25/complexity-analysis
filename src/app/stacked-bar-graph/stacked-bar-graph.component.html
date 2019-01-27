@@ -1,11 +1,11 @@
-<div class="container" [style.width.px]="width" [style.height.px]="height" fxLayout="row" fxLayoutGap="15px">
-  <div class="legend fade-in" fxFlex="15%" fxLayout="column" fxLayoutGap="5px">
-    <div *ngFor="let key of keys" fxFlex class="key-container" fxLayout="row">
-      <div class="circle" [style.background-color]="colorMap[key]"></div>
-      <div class="key">
+<div class="container" [style.width.px]="width" [style.height.px]="height" fxLayout="column" fxLayoutGap="15px">
+  <div class="legend fade-in" fxFlex="15%" fxLayout="row" fxLayoutGap="25px" fxLayoutAlign="space-around">
+    <a *ngFor="let key of keys" fxFlex class="key-container" fxLayout="row" [href]="hrefKeyMap[key]" target="_blank">
+      <div class="square" [style.background-color]="colorMap[key]"></div>
+      <div class="key" [style.color]="colorMap[key]">
         <p>{{key}}</p>
       </div>
-    </div>
+    </a>
   </div>
   <div class="stacked-bar-graph" #barGraph fxFlex></div>
 </div>
